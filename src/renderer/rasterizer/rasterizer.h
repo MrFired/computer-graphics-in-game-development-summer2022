@@ -93,7 +93,7 @@ namespace cg::renderer
 	}
 
 	template<typename VB, typename RT>
-	inline void rasterizer<VB, RT>::draw(size_t num_vertexes, size_t vertex_offset)
+	inline void rasterizer<VB, RT>::draw(size_t num_vertexes, size_t vertex_offest)
 	{
 		// TODO: Lab 1.04. Add `IA` and `Vertex shader` stages to `draw` method of `cg::renderer::rasterizer`
 		// TODO: Lab 1.05. Add `Rasterization` and `Pixel shader` stages to `draw` method of `cg::renderer::rasterizer`
@@ -106,13 +106,14 @@ namespace cg::renderer
 	rasterizer<VB, RT>::edge_function(float2 a, float2 b, float2 c)
 	{
 		// TODO: Lab 1.05. Implement `cg::renderer::rasterizer::edge_function` method
-
+		return 0.0f; // change
 	}
 
 	template<typename VB, typename RT>
 	inline bool rasterizer<VB, RT>::depth_test(float z, size_t x, size_t y)
 	{
 		// TODO: Lab 1.06. Implement depth_test function of cg::renderer::rasterizer class
+		return false; // change
 	}
 
 }// namespace cg::renderer
