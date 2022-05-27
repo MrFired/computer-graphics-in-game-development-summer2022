@@ -2,11 +2,11 @@
 
 #include "resource.h"
 
+#include <cfloat>
 #include <functional>
 #include <iostream>
 #include <linalg.h>
 #include <memory>
-#include <cfloat>
 
 
 using namespace linalg::aliases;
@@ -30,7 +30,7 @@ namespace cg::renderer
 
 		void set_viewport(size_t in_width, size_t in_height);
 
-		void draw(size_t num_vertexes, size_t vertex_offest);
+		void draw(size_t num_vertexes, size_t vertex_offset);
 
 		std::function<std::pair<float4, VB>(float4 vertex, VB vertex_data)> vertex_shader;
 		std::function<cg::color(const VB& vertex_data, const float z)> pixel_shader;
@@ -93,12 +93,33 @@ namespace cg::renderer
 	}
 
 	template<typename VB, typename RT>
-	inline void rasterizer<VB, RT>::draw(size_t num_vertexes, size_t vertex_offest)
+	inline void rasterizer<VB, RT>::draw(size_t num_vertexes, size_t vertex_offset)
 	{
-		// TODO: Lab 1.04. Add `IA` and `Vertex shader` stages to `draw` method of `cg::renderer::rasterizer`
+		size_t vertex_id = vertex_offset;
+		while (vertex_id < vertex_offset + num_vertexes)
+		{
+			std::vector<VB> vertices(3);
+			vertices[0] = vertex_buffer->item(
+					index_buffer->item(vertex_id++));
+			vertices[1] = vertex_buffer->item(
+					index_buffer->item(vertex_id++));
+			vertices[2] = vertex_buffer->item(
+					index_buffer->item(vertex_id++));
+
+			for (auto& vertex : vertices) {
+				float4 coords {vertex.x, vertex.y, vertex.z, 1.f};
+				auto processed_vertex = vertex_shader(coords, vertex);
+
+				vertex.x = processed_vertex.first.x / processed_vertex.first.w;
+				vertex.y = processed_vertex.first.y / processed_vertex.first.w;
+				vertex.z = processed_vertex.first.z / processed_vertex.first.w;
+
+				vertex.x = (vertex.x + 1.f) * width / 2.f;
+				vertex.y = (-vertex.y + 1.f) * height / 2.f;
+			}
+		}
 		// TODO: Lab 1.05. Add `Rasterization` and `Pixel shader` stages to `draw` method of `cg::renderer::rasterizer`
 		// TODO: Lab 1.06. Add Depth test stage to draw method of cg::renderer::rasterizer
-		
 	}
 
 	template<typename VB, typename RT>
@@ -106,14 +127,14 @@ namespace cg::renderer
 	rasterizer<VB, RT>::edge_function(float2 a, float2 b, float2 c)
 	{
 		// TODO: Lab 1.05. Implement `cg::renderer::rasterizer::edge_function` method
-		return 0.0f; // change
+		return 0.0f;// change
 	}
 
 	template<typename VB, typename RT>
 	inline bool rasterizer<VB, RT>::depth_test(float z, size_t x, size_t y)
 	{
 		// TODO: Lab 1.06. Implement depth_test function of cg::renderer::rasterizer class
-		return false; // change
+		return false;// change
 	}
 
 }// namespace cg::renderer
