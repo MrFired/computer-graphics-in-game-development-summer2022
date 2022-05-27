@@ -61,7 +61,7 @@ namespace cg
 	template<typename T>
 	inline T& resource<T>::item(size_t x, size_t y)
 	{
-		return data.at(x + y * stride)
+		return data.at(x + y * stride);
 	}
 	template<typename T>
 	inline size_t resource<T>::get_size_in_bytes() const
@@ -84,7 +84,7 @@ namespace cg
 	{
 		static color from_float3(const float3& in)
 		{
-			color color(in.x, in.y, in.z);
+			color color{in.x, in.y, in.z};
 			return color;
 		};
 		float3 to_float3() const
