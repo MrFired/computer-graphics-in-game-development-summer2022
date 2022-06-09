@@ -137,7 +137,6 @@ namespace cg
 		// texture coords
 		float u;
 		float v;
-		// TODO: change to color structs
 		// ambient color
 		float ambient_r;
 		float ambient_g;
