@@ -178,7 +178,7 @@ namespace cg::renderer
 
 				payload payload = trace_ray(ray, depth);
 
-				render_target->item(x, y) = RT::from_float3(payload.color);
+				render_target->item(x, y) = RT::from_color(payload.color);
 			}
 		}
 		// TODO: Lab 2.06. Add `history` resource in `raytracer` class
