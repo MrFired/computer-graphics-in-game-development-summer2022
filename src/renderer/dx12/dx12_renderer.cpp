@@ -236,7 +236,7 @@ void cg::renderer::dx12_renderer::load_assets()
 
 	index_buffers.resize(model->get_index_buffers().size());
 	index_buffer_views.resize(model->get_index_buffers().size());
-	
+
 	for (size_t i = 0; i < model->get_index_buffers().size(); ++i)
 	{
 		// Vertex buffer
@@ -247,8 +247,8 @@ void cg::renderer::dx12_renderer::load_assets()
 		std::wstring vertex_buffer_name(L"Vertex buffer ");
 		vertex_buffer_name += std::to_wstring(i);
 		create_resource_on_upload_heap(vertex_buffers[i], vertex_buffer_size, vertex_buffer_name);
-		
-		// Vertex buffer
+
+		// Index buffer
 		auto index_buffer_data = model->get_index_buffers()[i];
 		const UINT index_buffer_size = static_cast<UINT>(
 				index_buffer_data->get_size_in_bytes()
